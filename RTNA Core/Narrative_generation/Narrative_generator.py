@@ -4,7 +4,7 @@ from core.narrative_structuring import NarrativeStructuring
 from core.character_manager import CharacterManager
 from core.world_manager import WorldManager
 from core.narrative_generation.event_generator import EventGenerator
-from core.dialogue import DialogueManager
+from core.llm_integration import LLMIntegration
 from core.risk_assessment.relationship_risk_factor import RelationshipRiskFactor
 from core.escalation_manager import EscalationManager
 
@@ -22,9 +22,9 @@ class NarrativeGenerator:
         self.character_manager = character_manager
         self.world_manager = world_manager
         self.event_generator = EventGenerator() 
-        self.dialogue_manager = DialogueManager()
         self.escalation_manager = escalation_manager
         self.risk_factor_calculator = RelationshipRiskFactor("Game Purpose", "User Profile Placeholder")  
+        self.llm = LLMIntegration(provider="huggingface", model_name="gpt2")  # Or your chosen LLM
 
     def generate_narrative(self, player_action: str, current_location: str) -> str:
         """Generates narrative text based on player action and location."""
@@ -48,8 +48,11 @@ class NarrativeGenerator:
             self.escalation_manager.escalate_conversation(interaction_data)
             return "Conversation escalated to a specialist." # Or a similar message
 
-        # 6. Generate Dialogue (if applicable)
-        dialogue = self.dialogue_manager.get_dialogue(event, player, location_details)
+        # 6. Generate Dialogue (using LLM):
+        if self._should_generate_dialogue(event, player, location_details):
+            dialogue = self._generate_dialogue_with_llm(event, player, location_details)
+        else: 
+            dialogue = ""
 
         # 7. Structure Narrative (include event and dialogue):
         structured_narrative = self.narrative_structuring.structure_narrative(
@@ -80,6 +83,35 @@ class NarrativeGenerator:
                 amount = consequence["amount"]
                 player.change_stat(stat_name, amount) 
             # ... add logic for handling other consequence types ...
+
+    def _should_generate_dialogue(self, event, player, location):
+        """Determines if dialogue should be generated for the given context."""
+        # Implement your logic here - when should dialogue occur?
+        # Example:
+        if event["type"] in ["encounter_creature", "find_item"]: 
+            return True
+        return False
+
+    def _generate_dialogue_with_llm(self, event, player, location) -> str:
+        """Generates dialogue using the LLM."""
+        # Construct a prompt for the LLM based on context
+        prompt = self._create_dialogue_prompt(event, player, location)
+
+        # Generate dialogue using the LLM 
+        dialogue = self.llm.generate_text(prompt, max_tokens=50)  # Adjust max_tokens as needed
+        return dialogue
+
+    def _create_dialogue_prompt(self, event, player, location) -> str:
+        """Creates a prompt for the LLM based on the current context."""
+        # Example prompt:
+        prompt = f"{player.name} is in the {location.name}. "
+        if event["type"] == "encounter_creature":
+            creature = event.get("creature", "a creature")
+            prompt += f"{creature} says: "
+        elif event["type"] == "find_item":
+            item = event.get("item", "something")
+            prompt += f"{player.name} thinks: "
+        return prompt 
 
     def _generate_text_from_structure(self, structured_narrative: dict) -> str:
         """Generates text from the structured narrative."""
