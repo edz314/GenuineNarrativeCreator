@@ -1,27 +1,62 @@
 # core/character.py
 
 class Character:
-    """
-    Represents a character in the game, including the player and NPCs.
-    """
+    # ... (existing attributes and methods) ...
 
     def __init__(self, name: str, health: int, inventory: list = None):
-        """Initializes a Character object."""
-        self.name = name
-        self.health = health
-        self.inventory = inventory or []  # Initialize inventory as an empty list if not provided
-        self.location = None  # Add location attribute to track character's current location
-        # Add other stats as needed (strength, intelligence, etc.)
+        # ... (existing initialization) ...
+        self.motivations = {}  # Dictionary to store motivations
 
-    def __str__(self):
-        """Returns a string representation of the character."""
-        return f"{self.name} (Health: {self.health}, Inventory: {self.inventory})"
+    def add_motivation(self, motivation_name: str, urgency: int = 1):
+        """Adds a motivation to the character."""
+        self.motivations[motivation_name] = urgency
 
-    def change_stat(self, stat_name: str, amount: int):
-        """Changes a character stat by the given amount."""
-        if hasattr(self, stat_name):
-            setattr(self, stat_name, getattr(self, stat_name) + amount)
+    def select_action(self, available_actions: list, game_state: dict) -> str:
+        """
+        Selects an action based on the character's motivations and the game state.
 
-    def is_alive(self) -> bool:
-        """Checks if the character is alive."""
-        return self.health > 0
+        Args:
+            available_actions: A list of actions available to the character in the current situation.
+            game_state: A dictionary representing the current state of the game.
+
+        Returns:
+            The selected action as a string.
+        """
+        # 1. Prioritize Motivations:
+        sorted_motivations = sorted(self.motivations.items(), key=lambda item: item[1], reverse=True)
+
+        # 2. Evaluate Actions for Each Motivation:
+        for motivation, urgency in sorted_motivations:
+            for action in available_actions:
+                # 2.1. Check Action Feasibility (placeholder):
+                if self._is_action_feasible(action, motivation, game_state):
+                    # 2.2. Consider Potential Consequences (placeholder):
+                    if self._are_consequences_acceptable(action, motivation, game_state):
+                        return action
+
+        # 3. Default Action (if no suitable action is found):
+        return "wait"  # Or another default action
+
+    def _is_action_feasible(self, action: str, motivation: str, game_state: dict) -> bool:
+        """
+        Checks if the action is feasible for the given motivation and game state.
+
+        (You need to implement the logic based on your game's rules)
+        """
+        # Example:
+        if action == "move_to_location" and motivation == "find_food":
+            # Check if the target location has food
+            return True 
+        return False
+
+    def _are_consequences_acceptable(self, action: str, motivation: str, game_state: dict) -> bool:
+        """
+        Checks if the potential consequences of the action are acceptable.
+
+        (You need to implement the logic based on your game's rules)
+        """
+        # Example:
+        if action == "attack_creature" and motivation == "protect_self":
+            # Check if the player is strong enough to attack the creature
+            return True
+        return False
