@@ -1,72 +1,67 @@
- main.py
+# main.py
 
-# Import necessary modules from the core, utils, and integrations directories
-# Example:
+import pygame
 from core.narrative_generator import NarrativeGenerator
+from core.narrative_structuring import NarrativeStructuring
 from core.character_manager import CharacterManager
 from core.world_manager import WorldManager
 from utils.data_loading import load_game_data
-from integrations.pygame_integration import PygameIntegration  # If using Pygame
+from core.game_integration.pygame_integration import PygameIntegration # Assuming Pygame integration
+from utils.logging import setup_logging
 
 def main():
-    """
-    Main function to initialize and run the game.
-    """
+    # 1. Setup Logging
+    logger = setup_logging() 
+    logger.info("Starting Genuine Narrative Game")
 
-    # 1. Load game data (characters, world, etc.)
-    game_data = load_game_data("data/game_data.yaml")  # Example: Load from YAML file
+    # 2. Load Game Data 
+    game_data = load_game_data("data/world_data.yaml") # Update path if needed
 
-    # 2. Initialize core modules
-    narrative_generator = NarrativeGenerator()
+    # 3. Initialize Core Modules
+    narrative_structuring = NarrativeStructuring()
     character_manager = CharacterManager(game_data["characters"])
     world_manager = WorldManager(game_data["world"])
+    narrative_generator = NarrativeGenerator(narrative_structuring, character_manager, world_manager)
 
-    # 3. Initialize integration module (if applicable)
-    # Example:
-    if game_data["settings"]["use_pygame"]:
-        pygame_integration = PygameIntegration()
+    # 4. Initialize Pygame Integration (or other integrations)
+    pygame_integration = PygameIntegration()
 
-    # 4. Start the main game loop
-    while True:
-        # 4.1 Get player input
-        player_input = get_player_input()  # Implement input handling
+    # 5. Game Initialization
+    current_location = "forest"  # Starting location
+    player_action = ""
 
-        # 4.2 Process player input
-        #   - Update game state based on input
-        #   - Generate narrative using narrative_generator
-        #   - Update character and world state using character_manager and world_manager
-        #   - Display output to the player
+    # 6. Main Game Loop
+    running = True
+    while running:
+        # 6.1. Handle Events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            # ... Add other event handling (key presses, etc.)
 
-        # 4.3 Check for game end conditions
-        if game_over():
-            break
+        # 6.2. Get Player Input (replace with your Pygame input logic)
+        player_input = pygame_integration.handle_input()
+        if player_input:
+            player_action = player_input
+            logger.debug("Player Input: %s", player_action)
 
-    # 5. Game over, perform cleanup tasks
+        # 6.3. Generate Narrative
+        if player_action:
+            narrative_text = narrative_generator.generate_narrative(player_action, current_location)
+            logger.debug("Generated Narrative: %s", narrative_text)
 
-def get_player_input():
-    """
-    Gets player input from the user interface.
+            # 6.4. Display Narrative
+            pygame_integration.clear_screen()
+            pygame_integration.display_text(narrative_text)
+            pygame_integration.update_display()
 
-    Returns:
-        A string representing the player's input.
-    """
-    # Implement input handling based on the chosen UI (text-based or graphical)
-    # Example (text-based):
-    player_input = input("Enter your command: ")
-    return player_input
+            # 6.5. Process Player Action (Update game state based on action)
+            # ... (Update current_location, character stats, etc. based on player_action) 
+            player_action = "" # Reset player action
 
-def game_over():
-    """
-    Checks if the game has reached an end condition.
-
-    Returns:
-        True if the game is over, False otherwise.
-    """
-    # Implement logic to check for game end conditions
-    # Example:
-    if player_health <= 0:
-        return True
-    return False
+    # 7. Game Cleanup 
+    pygame.quit()
+    logger.info("Exiting Game")
 
 if __name__ == "__main__":
     main()
