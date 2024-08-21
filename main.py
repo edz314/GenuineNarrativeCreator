@@ -8,6 +8,7 @@ from core.world_manager import WorldManager
 from utils.data_loading import load_game_data
 from core.game_integration.pygame_integration import PygameIntegration # Assuming Pygame integration
 from utils.logging import setup_logging
+from core.action_executor import ActionExecutor
 
 def main():
     # 1. Setup Logging
@@ -64,8 +65,20 @@ def main():
         
             # 6.7 Initialize NarrativeGenerator (pass escalation_manager)
             narrative_generator = NarrativeGenerator(narrative_structuring, character_manager, world_manager, escalation_manager)
-           
-          )
+            
+            # 6.8 Initialize ActionExecutor
+            action_executor = ActionExecutor(character_manager, world_manager, narrative_generator)
+                
+        # Get available actions (you need to implement this logic based on game state)
+        available_actions = get_available_actions(player, current_location)  
+
+        # Select an action for the player
+        selected_action = player.select_action(available_actions, game_state)
+
+        # Execute the selected action
+        action_executor.execute_action(player, selected_action, game_state)
+        
+        )
     
     # 7. Game Cleanup 
     pygame.quit()
