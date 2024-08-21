@@ -1,88 +1,59 @@
-# core/narrative_generator.py
+# core/narrative_generation/narrative_generator.py
 
 from core.narrative_structuring import NarrativeStructuring
 from core.character_manager import CharacterManager
 from core.world_manager import WorldManager
-from core.risk_assessment.relationship_risk_factor import RelationshipRiskFactor
-from core.escalation_manager import EscalationManager
+from core.narrative_generation.event_generator import EventGenerator
+from core.dialogue import DialogueManager  # New import for dialogue
 
 class NarrativeGenerator:
     """
-    Generates narrative text based on game state, player actions, and character information.
+    Generates narrative text, handles events and dialogue.
     """
 
     def __init__(self, narrative_structuring: NarrativeStructuring, 
                  character_manager: CharacterManager, 
                  world_manager: WorldManager):
-        """
-        Initializes the NarrativeGenerator.
-
-        Args:
-            narrative_structuring: An object responsible for structuring the narrative.
-            character_manager: An object for managing characters.
-            world_manager: An object for managing the game world.
-        """
+        """Initializes NarrativeGenerator."""
         self.narrative_structuring = narrative_structuring
         self.character_manager = character_manager
         self.world_manager = world_manager
+        self.event_generator = EventGenerator() 
+        self.dialogue_manager = DialogueManager() # Initialize DialogueManager
 
-    def __init__(self, ..., escalation_manager: EscalationManager):
-        # ... existing initializations ...
-        self.risk_factor_calculator = RelationshipRiskFactor(self.ai_purpose, self.user_profile)
-        self.escalation_manager = escalation_manager
-
-    def generate_narrative(self, player_action, current_location):
-        # ... existing logic for narrative generation ...
-
-        # 1. Calculate Risk:
-        risk_factor = self.risk_factor_calculator.calculate_risk(interaction_data)  
-
-        # 2. Escalate if Needed:
-        if self.risk_factor_calculator.is_escalation_required(risk_factor):
-            self.escalation_manager.escalate_conversation(conversation_context)
-            return "Conversation escalated to a specialist." # Or similar message
-
-    def generate_narrative(self, player_action: str, current_location: str):
-        """
-        Generates narrative text based on the given player action and location.
-
-        Args:
-            player_action: The action performed by the player.
-            current_location: The player's current location.
-
-        Returns:
-            A string containing the generated narrative text.
-        """
-        
-        # Example: Fetching relevant data from other modules
+    def generate_narrative(self, player_action: str, current_location: str) -> str:
+        """Generates narrative text based on player action and location."""
         player = self.character_manager.get_player()
         location_details = self.world_manager.get_location_details(current_location)
 
-        # Placeholder for generating the structured narrative 
-        # based on player_action, player, and location_details
-        structured_narrative = self.narrative_structuring.structure_narrative(player_action, player, location_details) 
+        # 1. Generate Event:
+        event = self.event_generator.generate_event(player_action, player, location_details)
 
-        # Generate narrative text from the structured narrative.
+        # 2. Apply Event Consequences:
+        self._apply_event_consequences(event, player, current_location)
+
+        # 3. Generate Dialogue (if applicable)
+        dialogue = self.dialogue_manager.get_dialogue(event, player, location_details)
+
+        # 4. Structure Narrative (include event and dialogue):
+        structured_narrative = self.narrative_structuring.structure_narrative(
+            player_action, player, location_details, event, dialogue
+        )
+
+        # 5. Generate Text from Structure:
         narrative_text = self._generate_text_from_structure(structured_narrative)
-
         return narrative_text
 
-    def _generate_text_from_structure(self, structured_narrative: dict):
-        """
-        Generates narrative text from the structured narrative.
+    def _apply_event_consequences(self, event: dict, player: Character, current_location: str):
+        """Applies the consequences of an event."""
+        for consequence in event["consequences"]:
+            if consequence["type"] == "health_change":
+                self.character_manager.update_character_health(player.name, consequence["amount"])
+            elif consequence["type"] == "item_add":
+                self.character_manager.add_item_to_inventory(player.name, consequence["item"])
+            # ... add other consequence types as needed
 
-        Args:
-            structured_narrative: A structured representation of the narrative.
-
-        Returns:
-            A string containing the generated narrative text.
-        """
-
-        # Implement your text generation logic here.
-        # Example using a simple template:
-        narrative_text = f"{structured_narrative['introduction']}\n"
-        for event in structured_narrative['events']:
-            narrative_text += f"- {event['description']}\n"
-        narrative_text += f"{structured_narrative['conclusion']}"
-
-        return narrative_text
+    def _generate_text_from_structure(self, structured_narrative: dict) -> str:
+        """Generates text from the structured narrative."""
+        # ... implement your text generation logic here ...
+        pass  
