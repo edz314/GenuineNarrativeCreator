@@ -2,12 +2,16 @@
 
 from core.character import Character
 from core.world import Location
+from core.narrative_generation.event_generator import EventGenerator
 
 class NarrativeStructuring:
     """
     Structures the narrative based on player actions, character information, and world details.
     """
 
+    def __init__(self):
+        self.event_generator = EventGenerator()
+        
     def structure_narrative(self, player_action: str, player: Character, location: Location) -> dict:
         """
         Structures the narrative based on the given player action, character, and location.
@@ -32,3 +36,4 @@ class NarrativeStructuring:
         }
 
         return structured_narrative
+
