@@ -1,0 +1,15 @@
+world:
+  locations:
+    forest:
+      description: "A dense forest with towering trees and the scent of pine in the air."
+      connections: ["cave", "village"]
+      creatures: ["wolf", "goblin"]
+      items: ["healing potion", "rusty sword"]
+    cave:
+      description: "A dark and damp cave with a narrow passage leading deeper."
+      connections: ["forest"]
+      creatures: ["bat", "giant spider"]
+    village:
+      description: "A small, peaceful village with cobblestone streets and friendly inhabitants."
+      connections: ["forest"]
+      items: ["apple", "bread"]
