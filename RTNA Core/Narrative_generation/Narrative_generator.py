@@ -3,6 +3,8 @@
 from core.narrative_structuring import NarrativeStructuring
 from core.character_manager import CharacterManager
 from core.world_manager import WorldManager
+from core.risk_assessment.relationship_risk_factor import RelationshipRiskFactor
+from core.escalation_manager import EscalationManager
 
 class NarrativeGenerator:
     """
@@ -23,6 +25,22 @@ class NarrativeGenerator:
         self.narrative_structuring = narrative_structuring
         self.character_manager = character_manager
         self.world_manager = world_manager
+
+    def __init__(self, ..., escalation_manager: EscalationManager):
+        # ... existing initializations ...
+        self.risk_factor_calculator = RelationshipRiskFactor(self.ai_purpose, self.user_profile)
+        self.escalation_manager = escalation_manager
+
+    def generate_narrative(self, player_action, current_location):
+        # ... existing logic for narrative generation ...
+
+        # 1. Calculate Risk:
+        risk_factor = self.risk_factor_calculator.calculate_risk(interaction_data)  
+
+        # 2. Escalate if Needed:
+        if self.risk_factor_calculator.is_escalation_required(risk_factor):
+            self.escalation_manager.escalate_conversation(conversation_context)
+            return "Conversation escalated to a specialist." # Or similar message
 
     def generate_narrative(self, player_action: str, current_location: str):
         """
