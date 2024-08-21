@@ -1,0 +1,20 @@
+find_item:
+  healing potion: 
+    - "You find a healing potion. It emits a faint, green glow."
+    - "A healing potion! This will surely be helpful."
+  rusty sword: 
+    - "The sword is rusty, but it might still be useful."
+    - "You unearth a rusty sword from beneath a pile of leaves."
+  default:
+    - "You find something interesting."
+    - "You pick up an object from the ground."
+encounter_creature:
+  wolf:
+    - "A fierce wolf growls at you, its teeth bared."
+    - "The wolf circles you, its eyes fixed on your every move."
+  goblin:
+    - "The goblin sneers at you and brandishes a crude club."
+    - "A goblin jumps out from behind a rock, surprising you!"
+  default:
+    - "A creature appears from the shadows."
+    - "You hear a rustling in the bushes, and something approaches."
