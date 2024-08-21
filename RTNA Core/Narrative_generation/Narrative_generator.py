@@ -65,25 +65,28 @@ class NarrativeGenerator:
         narrative_text = self._generate_text_from_structure(structured_narrative)
         return narrative_text
 
-    def _apply_event_consequences(self, event: dict, player: Character, current_location: str):
+def _apply_event_consequences(self, event: dict, player: Character, current_location: str):
         """Applies the consequences of an event."""
         for consequence in event["consequences"]:
-            if consequence["type"] == "health_change":
+            consequence_type = consequence["type"]
+            if consequence_type == "health_change":
                 self.character_manager.update_character_health(player.name, consequence["amount"])
-            elif consequence["type"] == "item_add":
+            elif consequence_type == "item_add":
                 self.character_manager.add_item_to_inventory(player.name, consequence["item"])
-            elif consequence["type"] == "move_location":
+            elif consequence_type == "move_location":
                 new_location = consequence["location"]
-                current_location = new_location 
-                print(f"Moving player to {new_location}") 
-            elif consequence["type"] == "trigger_event":
+                self.world_manager.move_player(player, new_location) # Use WorldManager to move the player
+                current_location = new_location  # Update current location in NarrativeGenerator
+            elif consequence_type == "trigger_event":
                 new_event_type = consequence["event_type"]
-                # Add logic here to trigger a new event of the specified type
-                print(f"Triggering new event of type: {new_event_type}")
-            elif consequence["type"] == "change_character_stat":
+                # Trigger a new event (you'll need to implement this logic)
+                new_event = self.event_generator.generate_event("explore", player, self.world_manager.get_location_details(current_location))
+                self._apply_event_consequences(new_event, player, current_location)  # Apply consequences of the new event
+            elif consequence_type == "change_character_stat":
                 stat_name = consequence["stat"]
                 amount = consequence["amount"]
-                player.change_stat(stat_name, amount) 
+                player.change_stat(stat_name, amount)
+            # ... (add more consequence types as needed) ...
 
     def _should_generate_dialogue(self, event, player, location):
         """Determines if dialogue should be generated for the given context."""
