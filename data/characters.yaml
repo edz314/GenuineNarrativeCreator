@@ -1,0 +1,14 @@
+characters:
+  player:
+    name: "Anya"  # Default player name
+    health: 100
+    inventory: ["lantern"]
+  # Define NPCs (optional)
+  villager1:
+    name: "Elder Owen"
+    health: 60
+    dialogue: ["Welcome, traveler! What brings you to our humble village?"]
+  blacksmith:
+    name: "Thorgath"
+    health: 80
+    dialogue: ["Need anything forged? I work with the finest steel."]
