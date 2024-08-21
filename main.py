@@ -59,12 +59,14 @@ def main():
             # ... (Update current_location, character stats, etc. based on player_action) 
             player_action = "" # Reset player action
 
-            # Initialize EscalationManager
+            # 6.6 Initialize EscalationManager
             escalation_manager = EscalationManager(human_operator_available=True)  
         
-            # Initialize NarrativeGenerator (pass escalation_manager)
+            # 6.7 Initialize NarrativeGenerator (pass escalation_manager)
             narrative_generator = NarrativeGenerator(narrative_structuring, character_manager, world_manager, escalation_manager)
-
+           
+          )
+    
     # 7. Game Cleanup 
     pygame.quit()
     logger.info("Exiting Game")
