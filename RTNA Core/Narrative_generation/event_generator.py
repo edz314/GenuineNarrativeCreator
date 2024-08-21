@@ -19,7 +19,7 @@ class EventGenerator:
             location: The current location object.
 
         Returns:
-            A dictionary representing the generated event, including a description and potential consequences.
+            A dictionary representing the generated event, including a description, type, and potential consequences.
         """
 
         # Define a list of possible event templates.
@@ -41,20 +41,21 @@ class EventGenerator:
             item=random.choice(["rusty sword", "healing potion", "ancient map"])
         )
 
-        # Create an event dictionary.
+        event_type = self._get_event_type(player_action)
+
+        # Create an event dictionary with a type and potential additional data
         event = {
-            "type":  self._get_event_type(player_action),  # New: Assign an event type
+            "type": event_type,
             "description": event_description,
-            "consequences": self._generate_consequences(event_type, player, location),  # New: Generate consequences
-            # ... add other event data as needed (e.g., "item", "creature")
+            "consequences": self._generate_consequences(event_type, player, location),  
         }
 
         return event
-        
+
     def _get_event_type(self, player_action):
         """Determines the type of event based on the player's action."""
         if player_action == "explore":
-            return random.choice(["find_item", "encounter_creature", "nothing"])  # Example
+            return random.choice(["find_item", "encounter_creature", "move_location", "trigger_event", "nothing"])  
         # ... add logic for other player actions 
         return "nothing"
 
@@ -62,13 +63,21 @@ class EventGenerator:
         """Generates consequences based on the event type."""
         consequences = []
         if event_type == "encounter_creature":
-            # Example: Reduce player health for creature encounters
             consequences.append({"type": "health_change", "amount": -10})
         elif event_type == "find_item":
-            # Example: Add the found item to the player's inventory
             item = random.choice(location.items) if location.items else None
             if item:
                 consequences.append({"type": "item_add", "item": item})
                 event["item"] = item # Store item name in the event
+        elif event_type == "move_location": 
+            new_location = random.choice(location.connections) if location.connections else None
+            if new_location:
+                consequences.append({"type": "move_location", "location": new_location})
+                event["new_location"] = new_location # Store the new location
+        elif event_type == "trigger_event":
+            new_event_type = random.choice(["find_item", "encounter_creature", "nothing"])
+            consequences.append({"type": "trigger_event", "event_type": new_event_type})
+        elif event_type == "change_character_stat":
+            consequences.append({"type": "change_character_stat", "stat": "strength", "amount": 5})
         # ... add more consequence logic based on other event types
-        return consequences
+        return consequences 
