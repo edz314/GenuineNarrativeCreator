@@ -43,8 +43,32 @@ class EventGenerator:
 
         # Create an event dictionary.
         event = {
+            "type":  self._get_event_type(player_action),  # New: Assign an event type
             "description": event_description,
-            "consequences": []  # Add potential consequences based on event type
+            "consequences": self._generate_consequences(event_type, player, location),  # New: Generate consequences
+            # ... add other event data as needed (e.g., "item", "creature")
         }
 
         return event
+        
+    def _get_event_type(self, player_action):
+        """Determines the type of event based on the player's action."""
+        if player_action == "explore":
+            return random.choice(["find_item", "encounter_creature", "nothing"])  # Example
+        # ... add logic for other player actions 
+        return "nothing"
+
+    def _generate_consequences(self, event_type, player, location):
+        """Generates consequences based on the event type."""
+        consequences = []
+        if event_type == "encounter_creature":
+            # Example: Reduce player health for creature encounters
+            consequences.append({"type": "health_change", "amount": -10})
+        elif event_type == "find_item":
+            # Example: Add the found item to the player's inventory
+            item = random.choice(location.items) if location.items else None
+            if item:
+                consequences.append({"type": "item_add", "item": item})
+                event["item"] = item # Store item name in the event
+        # ... add more consequence logic based on other event types
+        return consequences
