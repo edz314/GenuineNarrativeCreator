@@ -1,38 +1,34 @@
-# RTNA Core/Narrative_generation/Narrative_structuring.py
+# core/narrative_structuring.py
+
+from core.character import Character
+from core.world import Location
 
 class NarrativeStructuring:
     """
-    Structures the narrative based on player actions and advertiser input.
+    Structures the narrative based on player actions, character information, and world details.
     """
 
-    def __init__(self):
+    def structure_narrative(self, player_action: str, player: Character, location: Location) -> dict:
         """
-        Initializes the NarrativeStructuring object.
-        """
-        # You might want to initialize some data structures or configurations here.
-
-    def structure_narrative(self, player_actions, advertiser_input):
-        """
-        Structures the narrative based on player actions and advertiser input.
+        Structures the narrative based on the given player action, character, and location.
 
         Args:
-            player_actions: A list of player actions.
-            advertiser_input: A dictionary of advertiser input.
+            player_action: The action performed by the player.
+            player: The player character object.
+            location: The current location object.
 
         Returns:
-            A structured representation of the narrative.
+            A dictionary representing the structured narrative.
         """
-        # This is a placeholder for the actual narrative structuring logic.
-        # You'll need to implement a method to structure the narrative based on
-        # the player actions and advertiser input.
 
-        # Example:
+        # Example implementation (you'll need to customize this based on your game logic)
         structured_narrative = {
-            "introduction": "The player embarks on a quest...",
+            "introduction": f"{player.name} decides to {player_action} in {location.name}.",
             "events": [
-                {"action": player_actions[0], "description": "The player explores the forest..."},
-                {"action": player_actions[1], "description": "The player finds a treasure chest..."}
+                {"description": f"{location.description}"},
+                # Add more events based on player_action, player, and location
             ],
-            "conclusion": "The player completes the quest..."
+            "conclusion": "The action has consequences (to be determined)."
         }
+
         return structured_narrative
