@@ -1,52 +1,19 @@
 # core/narrative_generation/dialogue.py
 
-import random
-from core.character import Character
-from core.world import Location
+from core.llm_integration import LLMIntegration
 
 class DialogueManager:
     """
-    Manages and generates dialogue for the game.
+    Manages and generates dialogue for the game using an LLM specifically for dialogue.
     """
 
-    def __init__(self):
-        """
-        Initializes the dialogue manager with sample dialogue data.
-        """
-        self.dialogue_data = {
-            "find_item": {
-                "healing potion": [
-                    "You carefully pick up the healing potion. It could come in handy.",
-                    "A healing potion! This might save your life later."
-                ],
-                "rusty sword": [
-                    "You find a rusty sword. It's better than nothing, but you hope to find something sharper.",
-                    "The sword is covered in rust, but you might be able to clean it up."
-                ],
-                "default": [
-                    "You discover something interesting.",
-                    "You find something lying on the ground."
-                ]
-            },
-            "encounter_creature": {
-                "wolf": [
-                    "The wolf snarls at you, baring its teeth.",
-                    "A large wolf blocks your path, its eyes glowing in the dim light."
-                ],
-                "goblin": [
-                    "The goblin sneers at you and brandishes a crude dagger.",
-                    "A small, green-skinned goblin jumps out from behind a tree!"
-                ],
-                "default": [
-                    "A creature appears before you.",
-                    "Something stirs in the shadows."
-                ]
-            }
-        }
+    def __init__(self, provider="huggingface", model_name="microsoft/DialoGPT-medium", api_key=None):
+        """Initializes the DialogueManager with an LLM for dialogue generation."""
+        self.llm = LLMIntegration(provider=provider, model_name=model_name, api_key=api_key)
 
-    def get_dialogue(self, event: dict, player: Character, location: Location) -> str:
+    def generate_dialogue(self, event: dict, player: Character, location: Location) -> str:
         """
-        Returns dialogue based on the event, if available.
+        Generates dialogue using the LLM based on the event and context.
 
         Args:
             event: The current event dictionary.
@@ -54,16 +21,31 @@ class DialogueManager:
             location: The current location object.
 
         Returns:
-            A string containing the dialogue, or an empty string if no dialogue is found.
+            A string containing the generated dialogue.
         """
-        event_type = event.get("type")
-        if event_type:
-            if event_type == "find_item":
-                item_name = event.get("item")
-                dialogue_lines = self.dialogue_data["find_item"].get(item_name) or self.dialogue_data["find_item"]["default"]
-                return random.choice(dialogue_lines)
-            elif event_type == "encounter_creature":
-                creature_name = event.get("creature")
-                dialogue_lines = self.dialogue_data["encounter_creature"].get(creature_name) or self.dialogue_data["encounter_creature"]["default"]
-                return random.choice(dialogue_lines)
-        return ""
+        prompt = self._create_dialogue_prompt(event, player, location)
+        dialogue = self.llm.generate_text(prompt, max_tokens=50)  # Adjust max_tokens as needed
+        return dialogue
+
+    def _create_dialogue_prompt(self, event: dict, player: Character, location: Location) -> str:
+        """
+        Creates a prompt for the LLM based on the event and game context.
+
+        Args:
+            event: The current event dictionary.
+            player: The player character object.
+            location: The current location object.
+
+        Returns:
+            A string containing the formatted prompt for the LLM.
+        """
+        prompt = f"{player.name} is in the {location.name}. "
+        if event["type"] == "encounter_creature":
+            creature = event.get("creature", "a creature")
+            prompt += f"{creature} approaches and says: "  # Guide the LLM to generate creature dialogue
+        elif event["type"] == "find_item":
+            item = event.get("item", "something")
+            prompt += f"{player.name}, examining the {item}, thinks: "  # Guide the LLM to generate player thoughts
+        # Add more prompt variations based on different event types
+
+        return prompt
