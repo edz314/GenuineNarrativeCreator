@@ -190,53 +190,101 @@ The player sees the narrative unfold based on their previous actions.
 
 **Example Diagram Outline:**
 +-----------------------------------+
+
 |          Player Action            |
+
 +-----------------------------------+
+
              |
+             
              v
+             
 +-----------------------------------+
+
 |      Narrative Generator          |
+
 |                                   |
+
 |  - Validate Action                |
+
 |  - Retrieve Game State            |
+
 |  - Structure Narrative            |
+
 +-----------------------------------+
+
              |
+             
              v
+             
 +-----------------------------------+
+
 |         Prompt Manager            |
+
 |                                   |
+
 |  - Generate Prompt                |
+
 |  - Adapt Prompt (if needed)       |
+
 +-----------------------------------+
+
              |
+             
              v
+             
 +-----------------------------------+
+
 |         LLM Integration           |
+
 |                                   |
+
 |  - Send Prompt to LLM             |
+
 |  - Retrieve Narrative Text        |
+
 +-----------------------------------+
+
              |
+             
              v
+             
 +-----------------------------------+
+
 |               LLM                 |
+
 |                                   |
+
 |  - Generate Narrative Text        |
+
 +-----------------------------------+
+
              |
+             
              v
+             
 +-----------------------------------+
+
 |          Game Engine              |
+
 |                                   |
+
 |  - Display Narrative              |
+
 +-----------------------------------+
+
              |
+             
              v
+             
 +-----------------------------------+
+
 |          Player Receives          |
+
 |          Narrative Output         |
+
 +-----------------------------------+
+
 
 
 **Scalability:**
