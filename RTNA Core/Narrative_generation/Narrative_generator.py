@@ -2,10 +2,12 @@ from core.narrative_structuring import NarrativeStructuring
 from core.character_manager import CharacterManager
 from core.world_manager import WorldManager
 from RTNA_Core.Narrative_generation.PromptManager import PromptManager
+from RTNA_Core.Narrative_generation.lore import Lore
 
 class NarrativeGenerator:
     """
     Generates narrative based on player actions and the current state of the game world.
+    Integrates with the Prompt Manager, LLM, and Lore to maintain narrative consistency.
     """
 
     def __init__(self, narrative_structuring: NarrativeStructuring, character_manager: CharacterManager, world_manager: WorldManager):
@@ -20,6 +22,7 @@ class NarrativeGenerator:
         self.narrative_structuring = narrative_structuring
         self.character_manager = character_manager
         self.world_manager = world_manager
+        self.lore = Lore()  # Initialize the Lore class to access world and character information
         self.prompt_manager = PromptManager(narrative_structuring, self.get_context_manager())
 
     def get_context_manager(self):
@@ -55,6 +58,13 @@ class NarrativeGenerator:
             characters = self.character_manager.get_characters_in_location(current_location)
             world_state = self.world_manager.get_world_state(current_location)
 
+            # Retrieve relevant lore information for consistency
+            world_rules = self.lore.get_world_rules()
+            character_backstories = {
+                character.name: self.lore.get_character_backstory(character.name)
+                for character in characters
+            }
+
             # Generate a narrative structure (e.g., setup, conflict, resolution)
             narrative_structure = self.narrative_structuring.create_structure(player_action, characters, world_state)
 
@@ -64,7 +74,9 @@ class NarrativeGenerator:
                 "location": current_location,
                 "action_description": player_action,
                 "characters": characters,
-                "world_state": world_state
+                "world_state": world_state,
+                "world_rules": world_rules,
+                "character_backstories": character_backstories
             }
             prompt = self.prompt_manager.create_prompt("action", main_character, current_state)
 
