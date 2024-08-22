@@ -1,5 +1,5 @@
-from core.narrative_structuring import NarrativeStructuring
-from data.lore import Lore
+from narrative.generation.narrative_structuring import NarrativeStructuring
+from narrative.lore.lore import Lore
 
 class PromptManager:
     """
