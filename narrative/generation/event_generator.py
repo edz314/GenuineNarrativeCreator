@@ -1,8 +1,7 @@
 # core/narrative_generation/event_generator.py
 
-import random
-from core.character import Character
-from core.world import Location
+from core.data_management.character_manager import Character
+from core.data_management.world_manager import Location
 
 class EventGenerator:
     """
