@@ -2,7 +2,7 @@ from core.narrative_structuring import NarrativeStructuring
 from core.character_manager import CharacterManager
 from core.world_manager import WorldManager
 from RTNA_Core.Narrative_generation.PromptManager import PromptManager
-from RTNA_Core.Narrative_generation.lore import Lore
+from data.lore import Lore
 
 class NarrativeGenerator:
     """
