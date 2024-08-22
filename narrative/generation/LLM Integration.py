@@ -1,4 +1,4 @@
-from RTNA_Core.Narrative_generation.PromptManager import PromptManager
+from narrative.generation.PromptManager import PromptManager
 
 class LLMIntegration:
     """
