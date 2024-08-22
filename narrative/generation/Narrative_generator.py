@@ -1,8 +1,8 @@
-from core.narrative_structuring import NarrativeStructuring
-from core.character_manager import CharacterManager
-from core.world_manager import WorldManager
-from RTNA_Core.Narrative_generation.PromptManager import PromptManager
-from data.lore import Lore
+from narrative.generation.narrative_structuring import NarrativeStructuring
+from core.data_management.character_manager import CharacterManager
+from core.data_management.world_manager import WorldManager
+from narrative.generation.PromptManager import PromptManager
+from narrative.lore.lore import Lore
 
 class NarrativeGenerator:
     """
