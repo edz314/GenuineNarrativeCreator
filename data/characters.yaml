@@ -1,14 +1,115 @@
 characters:
-  player:
-    name: "Anya"  # Default player name
-    health: 100
-    inventory: ["lantern"]
-  # Define NPCs (optional)
-  villager1:
-    name: "Elder Owen"
-    health: 60
-    dialogue: ["Welcome, traveler! What brings you to our humble village?"]
-  blacksmith:
-    name: "Thorgath"
-    health: 80
-    dialogue: ["Need anything forged? I work with the finest steel."]
+  glitch:
+    name: "Percy Hawthorne"
+    alias: "Glitch"
+    role: "Hacker and Researcher"
+    description: "A brilliant hacker with a reputation for uncovering secrets in the digital underworld of Neo-London. Known for her deep knowledge of underground data markets and a mysterious past that intertwines with the city's shadowy operations."
+    traits:
+      - "Intelligent"
+      - "Paranoid"
+      - "Resourceful"
+      - "Secretive"
+    background:
+      - "Formerly a professor at Imperial College, known in academic circles as Professor Persephone Hawthorne."
+      - "Earned the nickname 'Glitch' after a series of high-profile hacks that left authorities baffled."
+      - "Possesses an extensive network of contacts in both legitimate and illegitimate circles."
+    motivations:
+      - "Seeking truth and control over her own fate amidst the chaos of Neo-London."
+      - "Uncovering the true intentions behind Project TIMEFALL and The Lamplighter's activities."
+      - "Protecting her identity and those she cares about from the dangers that lurk in the city's underbelly."
+
+  reggie:
+    name: "Reginald Clive"
+    alias: "Reggie"
+    role: "Chief Inspector"
+    description: "A seasoned detective with a strong sense of duty and justice. Reggie is methodical in his approach and possesses a deep understanding of Neo-London's criminal landscape. He is one of the few people who can navigate the city's complexities with both intellectual rigor and physical prowess."
+    traits:
+      - "Disciplined"
+      - "Determined"
+      - "Insightful"
+      - "Protective"
+    background:
+      - "Known for his relentless pursuit of justice, Reggie has solved some of the city's most challenging cases."
+      - "His strict adherence to procedure is balanced by his willingness to bend the rules when necessary."
+      - "Respected by colleagues and feared by criminals, he is a force to be reckoned with in Neo-London."
+    motivations:
+      - "Upholding law and order in a city where chaos often reigns."
+      - "Uncovering the truth behind The Lamplighter and preventing further disruptions."
+      - "Ensuring the safety of Neo-London's citizens, even if it means making tough decisions."
+
+  arthur:
+    name: "Sir Arthur Travers Harris"
+    alias: "Arthur"
+    role: "Government Official"
+    description: "A high-ranking official responsible for maintaining order in Neo-London. Arthur is a man of the establishment, with methods that are often unorthodox but driven by a deep sense of duty. He is haunted by the events of the past and determined to prevent further chaos."
+    traits:
+      - "Authoritative"
+      - "Pragmatic"
+      - "Unyielding"
+      - "Cunning"
+    background:
+      - "A former military officer, Arthur's experience in conflict zones has shaped his approach to governance."
+      - "He played a key role in the rebuilding of London, overseeing security and stability in the wake of previous disasters."
+      - "Known for his ruthless efficiency, he is both respected and feared by those who work with him."
+    motivations:
+      - "Preserving the fragile order in Neo-London at all costs."
+      - "Preventing the fallout from Project TIMEFALL and The Lamplighter's actions from destabilizing the city."
+      - "Ensuring that the mistakes of the past are not repeated, even if it means making morally gray decisions."
+
+  lamplighter:
+    name: "Unknown"
+    alias: "The Lamplighter"
+    role: "Mysterious Hacker"
+    description: "An enigmatic figure known for hacking into public displays and systems across Neo-London, leaving behind cryptic messages and Victorian-era imagery. The Lamplighter's true identity and motives remain shrouded in mystery, but their actions suggest a deeper purpose."
+    traits:
+      - "Elusive"
+      - "Creative"
+      - "Provocative"
+      - "Subversive"
+    background:
+      - "The Lamplighter's origins are unknown, and their digital footprint is carefully obfuscated."
+      - "Their hacks are both a form of digital graffiti and a statement, challenging the city's power structures."
+      - "Though their actions are disruptive, there is a method to the madness—each strike seems to be part of a larger plan."
+    motivations:
+      - "Exposing the hidden truths of Neo-London and its power brokers."
+      - "Disrupting the status quo and forcing the city's inhabitants to confront uncomfortable realities."
+      - "Unraveling Project TIMEFALL and revealing its implications to the world."
+
+  inspector_marshal:
+    name: "Jenny Marsh"
+    alias: "Inspector Marshal"
+    role: "Detective Sergeant"
+    description: "A dedicated detective who works closely with Chief Inspector Reginald Clive. Jenny is sharp, observant, and committed to the pursuit of justice, often serving as the bridge between the rigid structures of law enforcement and the chaotic reality of the streets."
+    traits:
+      - "Observant"
+      - "Loyal"
+      - "Analytical"
+      - "Resilient"
+    background:
+      - "Joined the force to make a difference in Neo-London, quickly rising through the ranks due to her skill and determination."
+      - "Known for her ability to see patterns in chaos, she has been instrumental in solving several high-profile cases."
+      - "Her partnership with Reggie has become one of the most effective in the force, earning her respect and admiration."
+    motivations:
+      - "Supporting Reggie in his quest to uncover the truth behind The Lamplighter's activities."
+      - "Balancing the demands of the law with the reality of life in Neo-London's streets."
+      - "Ensuring that justice is served, even when the odds are stacked against her."
+
+  mysterious_stranger:
+    name: "Unknown"
+    alias: "The Stranger"
+    role: "Injured Man"
+    description: "A gravely injured man who appears at a hidden door in The Churn Districts. Clutching a battered satchel, he seems to hold a secret of great importance. His desperate plea suggests that he is involved in something far larger than himself."
+    traits:
+      - "Desperate"
+      - "Determined"
+      - "Secretive"
+      - "Haunted"
+    background:
+      - "Little is known about The Stranger, except that he was willing to risk everything to deliver whatever was in his satchel."
+      - "His identity is a mystery, but his actions suggest deep involvement in the city's shadowy conflicts."
+      - "His fate is unknown after he disappears behind the hidden door, leaving questions about what he was carrying and why."
+    motivations:
+      - "Delivering the contents of the satchel to their intended destination, no matter the cost."
+      - "Surviving long enough to see his mission through, whatever it may be."
+      - "Protecting whatever secret the satchel contains, even if it means his life."
+
