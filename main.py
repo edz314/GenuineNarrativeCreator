@@ -1,12 +1,12 @@
 import pygame
-from narative.generation.narrative_generator import NarrativeGenerator
-from narative.generation.narrative_structuring import NarrativeStructuring
-from narative.generation.character_manager import CharacterManager
+from narrative.generation.narrative_generator import NarrativeGenerator
+from narrative.generation.narrative_structuring import NarrativeStructuring
+from narrative.generation.character_manager import CharacterManager
 from core.data_management.world_manager import WorldManager
 from core.utils.data_loading import load_game_data
 from core.integration.game_integration.pygame_integration import PygameIntegration  # Assuming Pygame integration
 from core.utils.logging import setup_logging
-from narative.generation.action_executor import ActionExecutor
+from narrative.generation.action_executor import ActionExecutor
 
 
 def handle_events():
