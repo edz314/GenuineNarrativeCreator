@@ -1,8 +1,10 @@
 **Project Architecture Overview**
+
 **Introduction**
 This document provides an overview of the architecture of the narrative-driven game system. It details the key components, their responsibilities, and how they interact to generate dynamic narratives using a Large Language Model (LLM). The architecture is designed to be modular, allowing for easy maintenance, scalability, and integration of additional features.
 
 **Core Components**
+
 **1. Narrative Generator**
 Location: RTNA Core/Narrative_generation/Narrative_generator.py
 Purpose:
@@ -72,6 +74,7 @@ Maintain a record of previous player actions and narrative decisions.
 Provide context to the Prompt Manager for more accurate and context-aware prompt generation.
 
 **Workflow Overview**
+
 **Player Interaction:**
 
 The player performs an action within the game, which is captured by the game engine.
@@ -103,12 +106,14 @@ Advanced Prompt Management:
 As the narrative complexity grows, the Prompt Manager could be expanded to handle multi-character interactions, cross-references between different narrative arcs, and more sophisticated tone and style adaptations.
 
 **Narrative Generation Flow Diagram**
+
 **1. Flow Overview:**
 
 
 Player Action --> [Narrative Generator] --> [Prompt Manager] --> [LLM Integration] --> [LLM] --> [Narrative Text] --> [Game Engine] --> Player
 
 **2. Detailed Component Interaction:
+
 Narrative Generation Process:**
 
 **Player Action:**
@@ -189,6 +194,7 @@ Output: Updated Game State with new narrative.
 The player sees the narrative unfold based on their previous actions.
 
 **Example Diagram Outline:**
+
 +-----------------------------------+
 
 |          Player Action            |
@@ -202,8 +208,6 @@ The player sees the narrative unfold based on their previous actions.
 +-----------------------------------+
 
 |      Narrative Generator          |
-
-|                                   |
 
 |  - Validate Action                |
 
@@ -221,8 +225,6 @@ The player sees the narrative unfold based on their previous actions.
 
 |         Prompt Manager            |
 
-|                                   |
-
 |  - Generate Prompt                |
 
 |  - Adapt Prompt (if needed)       |
@@ -236,8 +238,6 @@ The player sees the narrative unfold based on their previous actions.
 +-----------------------------------+
 
 |         LLM Integration           |
-
-|                                   |
 
 |  - Send Prompt to LLM             |
 
@@ -253,8 +253,6 @@ The player sees the narrative unfold based on their previous actions.
 
 |               LLM                 |
 
-|                                   |
-
 |  - Generate Narrative Text        |
 
 +-----------------------------------+
@@ -266,8 +264,6 @@ The player sees the narrative unfold based on their previous actions.
 +-----------------------------------+
 
 |          Game Engine              |
-
-|                                   |
 
 |  - Display Narrative              |
 
