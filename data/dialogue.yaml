@@ -1,20 +1,87 @@
-find_item:
-  healing potion: 
-    - "You find a healing potion. It emits a faint, green glow."
-    - "A healing potion! This will surely be helpful."
-  rusty sword: 
-    - "The sword is rusty, but it might still be useful."
-    - "You unearth a rusty sword from beneath a pile of leaves."
-  default:
-    - "You find something interesting."
-    - "You pick up an object from the ground."
-encounter_creature:
-  wolf:
-    - "A fierce wolf growls at you, its teeth bared."
-    - "The wolf circles you, its eyes fixed on your every move."
-  goblin:
-    - "The goblin sneers at you and brandishes a crude club."
-    - "A goblin jumps out from behind a rock, surprising you!"
-  default:
-    - "A creature appears from the shadows."
-    - "You hear a rustling in the bushes, and something approaches."
+dialogues:
+  Glitch:
+    introduction:
+      - "In this line of work, paranoia isn't just a trait—it's a survival skill."
+      - "You never open a file without questioning its source. Not in this city, not with what’s at stake."
+      - "They call me Glitch, but that's just a name they gave me. In this world, names are dangerous."
+
+    during_investigation:
+      - "Something's happening out there, something big. But what? The pieces are scattered, and I’m chasing shadows."
+      - "Every message, every dead drop—it’s like the city's trying to tell me something, but it’s speaking in riddles."
+      - "This file... I haven't opened it yet. I need to be sure before I dive in. The wrong move could unravel everything."
+      - "I can trace The Lamplighter’s digital footsteps, but what’s their endgame? A warning? A threat? Or something worse?"
+      - "It's not just about the data. It's about control. Whoever controls the flow controls the city."
+
+    on_discovery:
+      - "The Lamplighter isn't just playing games. They're creating a map, and I'm starting to see the pattern."
+      - "This isn't just a stunt. It's a statement. And it's directed at me... or maybe at all of us."
+      - "Project TIMEFALL... What the hell have they been working on? If this gets out, the whole city's in jeopardy."
+      - "The more I dig, the more I realize—this isn’t just another job. This is personal."
+
+    decision_point:
+      - "I’ve got the clearance to access this file, but do I really want to know? Some things are better left in the dark."
+      - "The Lamplighter’s strikes, the whispers in the net—it's all connected. But how deep does this rabbit hole go?"
+      - "Do I expose what I know and risk everything, or do I keep playing the game, hoping to stay one step ahead?"
+
+  Reggie:
+    introduction:
+      - "This city has a way of grinding people down, but I’m not about to let it win."
+      - "People say I’m old school, but that’s just because I remember what order looks like."
+      - "Every case is a puzzle. You just have to know which pieces fit where."
+
+    during_investigation:
+      - "The Lamplighter’s latest stunt—more than just digital graffiti. There’s a message here, but we’re not seeing it yet."
+      - "They think they’re clever, hiding in the shadows. But I’ve been doing this long enough to know where to look."
+      - "Something’s off. The timing, the locations... This isn’t just random. It’s deliberate."
+      - "I don’t believe in coincidences. This feels like the start of something much bigger."
+
+    on_discovery:
+      - "The Lamplighter’s not just a vandal. They’re sending a message, and it’s not just for the public."
+      - "The deeper I dig, the more I realize—this isn’t just about the lights. It’s about control, about power."
+      - "We’re dealing with someone who knows the system inside and out. They’re exploiting every weakness."
+      - "I need to think like them, see the city the way they do. Only then will I know what they’re after."
+
+    decision_point:
+      - "The October Archive... I never thought I’d have to dig into that mess again. But if it’s connected, I don’t have a choice."
+      - "Arthur’s right—this isn’t about overtime or warrants. This is about preventing a catastrophe."
+      - "Do I bring Percy into this? She’s the key, but this could drag her into something she might never escape."
+
+  Arthur:
+    introduction:
+      - "I've seen this city rise and fall more times than I care to count. But one thing remains—order must be preserved."
+      - "Some call my methods harsh. I call them necessary."
+      - "We didn’t rebuild this city just to let it fall apart again."
+
+    during_investigation:
+      - "The Lamplighter is a nuisance, yes, but nuisances have a way of becoming threats if left unchecked."
+      - "This isn’t just about flashy lights and hijacked displays. There’s something more sinister at play."
+      - "We need to stay ahead of this, Reggie. The last thing we need is another crisis."
+      - "I trust your instincts, but remember—whatever action we take, it must be decisive."
+
+    on_discovery:
+      - "The October Archive... It’s a Pandora’s box, and opening it might unleash something we’re not prepared to handle."
+      - "We have to tread carefully. One wrong move, and we could be dealing with chaos on a scale we’ve never seen."
+      - "I didn’t come this far to watch it all crumble. If we have to take extreme measures, so be it."
+      - "This city has secrets buried deep, and if The Lamplighter is digging them up, we need to be ready for anything."
+
+    decision_point:
+      - "Granting access to the October Archive is risky, but I trust your judgment. Just don’t let it get out of hand."
+      - "Percy’s involvement complicates things. She’s brilliant, but this could put her in more danger than we realize."
+      - "We’re standing on the edge of something big. If we’re not careful, it could swallow us all."
+
+  NPCs:
+    lamplighter_message:
+      - "In the flicker of the lamp, the truth is revealed. Look closer, and you’ll see the light."
+      - "History repeats, but only for those who aren’t paying attention."
+      - "The door opens both ways. Time to choose a side."
+    
+    mysterious_stranger:
+      - "I did what was required. It’s all here. Just... don’t let it be for nothing."
+      - "You have no idea what you’re getting into. But it’s too late to turn back now."
+      - "This city... it’s not what it seems. There are layers upon layers, and you’ve barely scratched the surface."
+
+    bystander:
+      - "I don’t know why everyone’s fussing about the lights. There was a man, proper injured he was, just before it all started."
+      - "Blood on his coat, he ran past like he was being chased by the devil himself."
+      - "Shouldn’t someone be looking for him instead of worrying about some daft pictures?"
+
