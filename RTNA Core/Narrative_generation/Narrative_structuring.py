@@ -1,147 +1,90 @@
 class NarrativeStructuring:
     """
-    Handles the structuring of narratives, defining the flow of events and how they are presented.
+    Handles the structuring of the narrative, determining how elements such as setup, conflict, and resolution
+    are arranged based on the current game state, player actions, and probabilistic factors.
     """
 
-    def __init__(self):
+    def __init__(self, lore):
         """
-        Initializes the NarrativeStructuring object.
+        Initializes the NarrativeStructuring component.
+
+        Args:
+            lore (Lore): Instance of the Lore class for accessing world and character information.
         """
-        self.default_structure = {
-            'setup': "The scene is set.",
-            'conflict': "A challenge arises.",
-            'resolution': "The situation is resolved."
-        }
+        self.lore = lore
 
     def create_structure(self, player_action, characters, world_state):
         """
-        Creates a narrative structure based on player action, characters, and world state.
+        Creates a narrative structure based on player action, characters involved, and the current state of the world.
 
         Args:
             player_action (str): The action performed by the player.
-            characters (list): The list of characters involved in the narrative.
-            world_state (dict): The current state of the world/environment.
+            characters (list): A list of characters involved in the narrative.
+            world_state (dict): The current state of the game world.
 
         Returns:
-            dict: A structured narrative dict with elements like setup, conflict, and resolution.
+            dict: A dictionary representing the structured narrative elements.
         """
-        structure = {}
-
-        # Determine the setup based on the world state and player action
-        structure['setup'] = self._generate_setup(player_action, world_state)
-
-        # Create a conflict based on the player action and characters
-        structure['conflict'] = self._generate_conflict(player_action, characters, world_state)
-
-        # Determine the resolution based on the outcome or potential outcomes of the action
-        structure['resolution'] = self._generate_resolution(player_action, characters, world_state)
-
-        return structure
-
-    def _generate_setup(self, player_action, world_state):
-        """
-        Generates the setup portion of the narrative based on the world state and player action.
-
-        Args:
-            player_action (str): The action performed by the player.
-            world_state (dict): The current state of the world/environment.
-
-        Returns:
-            str: The setup text.
-        """
-        # Example logic: The setup could depend on the time of day or the current location
-        location = world_state.get('location', 'an unknown place')
-        time_of_day = world_state.get('time_of_day', 'daytime')
-
-        setup_text = f"The player finds themselves in {location} during {time_of_day}."
-        return setup_text
-
-    def _generate_conflict(self, player_action, characters, world_state):
-        """
-        Generates the conflict portion of the narrative based on the player action and characters.
-
-        Args:
-            player_action (str): The action performed by the player.
-            characters (list): The list of characters involved in the narrative.
-            world_state (dict): The current state of the world/environment.
-
-        Returns:
-            str: The conflict text.
-        """
-        # Example logic: Conflict could arise based on an interaction with a character or a challenge in the environment
-        if characters:
-            main_character = characters[0].name  # Assuming the first character is the primary one
-            conflict_text = f"{main_character} opposes the player's decision to {player_action}."
-        else:
-            conflict_text = f"The player's action to {player_action} causes a disturbance in the environment."
-
-        return conflict_text
-
-    def _generate_resolution(self, player_action, characters, world_state):
-        """
-        Generates the resolution portion of the narrative based on the player action and characters.
-
-        Args:
-            player_action (str): The action performed by the player.
-            characters (list): The list of characters involved in the narrative.
-            world_state (dict): The current state of the world/environment.
-
-        Returns:
-            str: The resolution text.
-        """
-        # Example logic: The resolution could depend on the success or failure of the player's action
-        success_chance = world_state.get('success_chance', 0.5)  # Default success chance is 50%
-        resolution = "successfully" if success_chance > 0.5 else "unsuccessfully"
-
-        if characters:
-            main_character = characters[0].name  # Assuming the first character is the primary one
-            resolution_text = f"{main_character} helps the player to {resolution} complete the action."
-        else:
-            resolution_text = f"The player {resolution} completes the action."
-
-        return resolution_text
-
-    def update_default_structure(self, new_structure):
-        """
-        Updates the default narrative structure used as a fallback.
-
-        Args:
-            new_structure (dict): A dictionary containing the new default structure.
-        """
-        if isinstance(new_structure, dict):
-            self.default_structure.update(new_structure)
-        else:
-            raise ValueError("New structure must be a dictionary.")
-
-    def apply_custom_structure(self, custom_structure, player_action, characters, world_state):
-        """
-        Applies a custom narrative structure instead of the default one.
-
-        Args:
-            custom_structure (dict): The custom narrative structure to apply.
-            player_action (str): The action performed by the player.
-            characters (list): The list of characters involved in the narrative.
-            world_state (dict): The current state of the world/environment.
-
-        Returns:
-            dict: A structured narrative dict based on the custom structure.
-        """
-        structure = {}
-
-        for key, value in custom_structure.items():
-            if callable(value):
-                structure[key] = value(player_action, characters, world_state)
-            else:
-                structure[key] = value
-
-        return structure
-
-    def reset_structure(self):
-        """
-        Resets the narrative structure to its default state.
-        """
-        self.default_structure = {
-            'setup': "The scene is set.",
-            'conflict': "A challenge arises.",
-            'resolution': "The situation is resolved."
+        narrative_structure = {
+            "setup": self._create_setup(player_action, characters, world_state),
+            "conflict": self._create_conflict(player_action, characters, world_state),
+            "resolution": self._create_resolution(player_action, characters, world_state)
         }
+
+        return narrative_structure
+
+    def _create_setup(self, player_action, characters, world_state):
+        """
+        Creates the setup part of the narrative based on the input parameters.
+
+        Args:
+            player_action (str): The action performed by the player.
+            characters (list): A list of characters involved in the narrative.
+            world_state (dict): The current state of the game world.
+
+        Returns:
+            str: The narrative setup description.
+        """
+        # Use lore to enhance the setup
+        character_name = characters[0].name
+        backstory = self.lore.get_character_backstory(character_name).get('backstory', 'a mysterious past')
+        world_rules = ', '.join(self.lore.get_world_rules().values())
+
+        return f"At the beginning of this scenario, {character_name}, known for {backstory}, navigates a world where {world_rules} set the stage."
+
+    def _create_conflict(self, player_action, characters, world_state):
+        """
+        Creates the conflict part of the narrative based on the input parameters.
+
+        Args:
+            player_action (str): The action performed by the player.
+            characters (list): A list of characters involved in the narrative.
+            world_state (dict): The current state of the game world.
+
+        Returns:
+            str: The narrative conflict description.
+        """
+        # Example: Introduce conflict considering lore-based motivations
+        character_name = characters[0].name
+        motivation = self.lore.get_character_backstory(character_name).get('motivations', ['personal gain'])[0]
+
+        return f"The action taken by the player brings {character_name} into direct conflict with another, driven by their motivation for {motivation}."
+
+    def _create_resolution(self, player_action, characters, world_state):
+        """
+        Creates the resolution part of the narrative based on the input parameters.
+
+        Args:
+            player_action (str): The action performed by the player.
+            characters (list): A list of characters involved in the narrative.
+            world_state (dict): The current state of the game world.
+
+        Returns:
+            str: The narrative resolution description.
+        """
+        # Example: Use world rules and past events to craft a resolution
+        character_name = characters[0].name
+        resolution_event = world_state.get('resolution_conditions', 'an unexpected turn')
+        world_rules = ', '.join(self.lore.get_world_rules().values())
+
+        return f"The conflict resolves as {character_name} encounters {resolution_event}, all under the shadow of the world’s rules: {world_rules}."
