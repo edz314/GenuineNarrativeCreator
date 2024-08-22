@@ -1,15 +1,81 @@
 world:
+  name: "Neo-London"
+  description: "A dystopian version of London where neon lights flicker over rain-slick streets, and shadows hide more than just darkness. The city is a sprawling labyrinth of districts, each more dangerous and secretive than the last. The air is thick with tension, and the line between reality and the digital world is blurred."
+
   locations:
-    forest:
-      description: "A dense forest with towering trees and the scent of pine in the air."
-      connections: ["cave", "village"]
-      creatures: ["wolf", "goblin"]
-      items: ["healing potion", "rusty sword"]
-    cave:
-      description: "A dark and damp cave with a narrow passage leading deeper."
-      connections: ["forest"]
-      creatures: ["bat", "giant spider"]
-    village:
-      description: "A small, peaceful village with cobblestone streets and friendly inhabitants."
-      connections: ["forest"]
-      items: ["apple", "bread"]
+    - name: "The City Core"
+      description: "The heart of Neo-London, where towering skyscrapers and digital billboards dominate the skyline. The City Core is a hub of power and corruption, with corporations controlling the flow of information and the city's underworld thriving in the shadows."
+      notable_features:
+        - "Flickering neon lights casting eerie shadows on the streets."
+        - "Rain-soaked alleys where the desperate and the damned linger."
+        - "A cacophony of sounds from electronic ads, distant sirens, and the murmurs of people lost in their own worlds."
+
+    - name: "The Churn Districts"
+      description: "A collection of districts where the city's impersonal noise is most intense. The Churn Districts are known for their anonymity and constant flux, where nothing remains the same for long. This is where identities are lost, and the city's true underbelly is revealed."
+      notable_features:
+        - "Ever-changing streets that confuse even the most experienced locals."
+        - "Hidden doors that lead to places of closure, if you know the right way to knock."
+        - "A persistent sense of unease, as if the city itself is watching."
+
+    - name: "Old Street Enclave"
+      description: "Once a hub of tech startups, now a fortified government zone. The Old Street Enclave is home to the Department of Obscure Computing and other secretive agencies. The area is heavily guarded, with a blend of cutting-edge technology and artifacts from a bygone era."
+      notable_features:
+        - "Imposing buildings of concrete, glass, and steel, designed to withstand any assault."
+        - "Holographic displays mixed with relics from past conflicts, symbolizing the fragility of order."
+        - "A pervasive sense of authority and control, with little room for dissent."
+
+    - name: "Imperial College's Department of Obscure Computing"
+      description: "A hidden research facility within Imperial College, where advanced and often dangerous experiments take place. The department is a key player in the city's shadowy undercurrents, and its projects are closely guarded secrets."
+      notable_features:
+        - "Labyrinthine networks of data streams monitored by a select few."
+        - "Classified projects that could reshape the digital landscape—or destroy it."
+        - "An atmosphere of intense focus, where every keystroke could mean the difference between order and chaos."
+
+  events:
+    - name: "The Lamplighter Strikes"
+      trigger: "Player visits Piccadilly Circus or interacts with public displays."
+      description: "The city's public displays have been hijacked by The Lamplighter, a mysterious hacker who leaves behind Victorian-era imagery and cryptic messages. The latest incident has turned the iconic Piccadilly Lights into a giant flickering gas lamp, casting eerie shadows and drawing the attention of both the authorities and the underworld."
+      impact:
+        - "Increased security presence in the area."
+        - "New leads for the player to follow, possibly uncovering hidden truths."
+        - "Heightened tension in the city, as rumors and fear spread."
+
+    - name: "A Desperate Knock"
+      trigger: "Player explores hidden doors in The Churn Districts."
+      description: "The player stumbles upon a gravely injured man knocking on a hidden door in The Churn Districts. His desperate plea for help and the mysterious satchel he carries suggest he holds a secret of great importance. The door opens just enough for him to disappear into the shadows, leaving the player to wonder what lies beyond."
+      impact:
+        - "The player can choose to investigate the man's fate or pursue the secret he was trying to protect."
+        - "New quests or missions related to the man's secret or the door's significance."
+
+    - name: "Project TIMEFALL Unveiled"
+      trigger: "Player gains access to the Department of Obscure Computing."
+      description: "The player discovers a classified project known as TIMEFALL, which has been the focus of recent anomalies in the city's data networks. The project holds the potential to alter the fabric of reality, but it is unclear whether its purpose is to protect or to control."
+      impact:
+        - "The player must decide whether to support the project, sabotage it, or expose its existence to the public."
+        - "Choices made here could have far-reaching consequences for the city and its inhabitants."
+
+  characters:
+    - name: "Glitch (Percy Hawthorne)"
+      role: "Hacker and Researcher"
+      description: "Glitch is a brilliant yet enigmatic figure known for her deep knowledge of London's underground data markets. She is driven by a mix of curiosity and a sense of responsibility, though her true motives are often hidden behind layers of secrecy."
+      traits:
+        - "Clever and resourceful, with a reputation for solving digital mysteries."
+        - "Paranoid, always wary of those who might uncover her true identity."
+        - "Connected to both the academic world and the shadowy underbelly of Neo-London."
+
+    - name: "Chief Inspector Reginald 'Reggie' Clive"
+      role: "Senior Detective"
+      description: "Reggie Clive is a seasoned detective with a keen mind and a strong sense of duty. He is methodical in his approach to solving crimes and is one of the few people who understand the full extent of the challenges facing Neo-London."
+      traits:
+        - "Tall and imposing, with a presence that commands respect."
+        - "Intellectual rigor combined with physical prowess, making him a formidable investigator."
+        - "Believes in justice and order, but is willing to bend the rules to achieve it."
+
+    - name: "Sir Arthur Travers Harris"
+      role: "Government Official"
+      description: "Sir Arthur is a high-ranking government official who plays a key role in maintaining order in Neo-London. He is a man of the establishment, but his methods are often unconventional and driven by a deep-seated fear of chaos."
+      traits:
+        - "Stern and authoritative, with a history of making difficult decisions."
+        - "Pragmatic, often willing to take extreme measures to ensure stability."
+        - "Haunted by past events, which influence his actions in the present."
+
