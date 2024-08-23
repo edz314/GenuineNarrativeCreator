@@ -13,7 +13,7 @@ class NarrativeStructuring:
         Args:
             lore (Lore): Instance of the Lore class for accessing world and character information.
             map_manager (MapManager): Instance of the MapManager for accessing and generating maps.
-            event_manager (EventManager): Instance of an EventManager for managing game events and conditions.
+            event_manager (EventManager): Instance of the EventManager for managing game events and conditions.
         """
         self.lore = lore
         self.map_manager = map_manager
@@ -31,17 +31,23 @@ class NarrativeStructuring:
         Returns:
             dict: A dictionary representing the structured narrative elements.
         """
+        # Update events based on the current world state
+        self.event_manager.update_events(world_state)
+        
+        # Determine active events that may influence the narrative
+        active_events = self._get_active_events(world_state)
+
         narrative_structure = {
-            "setup": self._create_setup(player_action, characters, world_state),
-            "conflict": self._create_conflict(player_action, characters, world_state),
-            "resolution": self._create_resolution(player_action, characters, world_state),
-            "branching_paths": self._determine_branching_paths(player_action, characters, world_state),
+            "setup": self._create_setup(player_action, characters, world_state, active_events),
+            "conflict": self._create_conflict(player_action, characters, world_state, active_events),
+            "resolution": self._create_resolution(player_action, characters, world_state, active_events),
+            "branching_paths": self._determine_branching_paths(player_action, characters, world_state, active_events),
             "event_triggers": self._check_event_triggers(world_state)
         }
 
         return narrative_structure
 
-    def _create_setup(self, player_action, characters, world_state):
+    def _create_setup(self, player_action, characters, world_state, active_events):
         """
         Creates the setup part of the narrative based on the input parameters.
 
@@ -49,6 +55,7 @@ class NarrativeStructuring:
             player_action (str): The action performed by the player.
             characters (list): A list of characters involved in the narrative.
             world_state (dict): The current state of the game world.
+            active_events (list): List of active events that might affect the setup.
 
         Returns:
             str: The narrative setup description.
@@ -58,9 +65,13 @@ class NarrativeStructuring:
         world_rules = ', '.join(self.lore.get_world_rules().values())
         current_location = player_action.get('location', 'an unknown place')
 
-        return f"At the beginning of this scenario, {character_name}, known for {backstory}, navigates {current_location} where {world_rules} set the stage."
+        # Incorporate active events into the setup narrative
+        event_descriptions = self._describe_active_events(active_events)
+        setup_narrative = f"At the beginning of this scenario, {character_name}, known for {backstory}, navigates {current_location} where {world_rules} set the stage. {event_descriptions}"
 
-    def _create_conflict(self, player_action, characters, world_state):
+        return setup_narrative
+
+    def _create_conflict(self, player_action, characters, world_state, active_events):
         """
         Creates the conflict part of the narrative based on the input parameters.
 
@@ -68,6 +79,7 @@ class NarrativeStructuring:
             player_action (str): The action performed by the player.
             characters (list): A list of characters involved in the narrative.
             world_state (dict): The current state of the game world.
+            active_events (list): List of active events that might affect the conflict.
 
         Returns:
             str: The narrative conflict description.
@@ -76,9 +88,15 @@ class NarrativeStructuring:
         motivation = self.lore.get_character_backstory(character_name).get('motivations', ['personal gain'])[0]
         opposing_force = self._identify_opposing_force(player_action, characters, world_state)
 
-        return f"The action taken by {character_name} brings them into conflict with {opposing_force}, driven by their motivation for {motivation}."
+        # Modify conflict based on active events
+        if 'natural_disaster' in active_events:
+            conflict_narrative = f"The action taken by {character_name} is interrupted by a raging storm, forcing them into a conflict with {opposing_force}, all while trying to survive the disaster."
+        else:
+            conflict_narrative = f"The action taken by {character_name} brings them into conflict with {opposing_force}, driven by their motivation for {motivation}."
 
-    def _create_resolution(self, player_action, characters, world_state):
+        return conflict_narrative
+
+    def _create_resolution(self, player_action, characters, world_state, active_events):
         """
         Creates the resolution part of the narrative based on the input parameters.
 
@@ -86,6 +104,7 @@ class NarrativeStructuring:
             player_action (str): The action performed by the player.
             characters (list): A list of characters involved in the narrative.
             world_state (dict): The current state of the game world.
+            active_events (list): List of active events that might affect the resolution.
 
         Returns:
             str: The narrative resolution description.
@@ -94,9 +113,15 @@ class NarrativeStructuring:
         resolution_event = world_state.get('resolution_conditions', 'an unexpected turn')
         world_rules = ', '.join(self.lore.get_world_rules().values())
 
-        return f"The conflict resolves as {character_name} encounters {resolution_event}, all under the shadow of the world’s rules: {world_rules}."
+        # Adjust resolution based on active events
+        if 'natural_disaster' in active_events:
+            resolution_narrative = f"As {character_name} fights to overcome {resolution_event}, they must also contend with the devastation left by the storm. The world’s rules seem more fragile than ever."
+        else:
+            resolution_narrative = f"The conflict resolves as {character_name} encounters {resolution_event}, all under the shadow of the world’s rules: {world_rules}."
 
-    def _determine_branching_paths(self, player_action, characters, world_state):
+        return resolution_narrative
+
+    def _determine_branching_paths(self, player_action, characters, world_state, active_events):
         """
         Determines possible branching paths in the narrative based on player actions and current state.
 
@@ -104,12 +129,14 @@ class NarrativeStructuring:
             player_action (str): The action performed by the player.
             characters (list): A list of characters involved in the narrative.
             world_state (dict): The current state of the game world.
+            active_events (list): List of active events that might affect the narrative paths.
 
         Returns:
             list: Possible narrative paths that can be taken next.
         """
-        # Example logic for branching paths
-        if player_action.get('type') == 'explore':
+        if 'natural_disaster' in active_events:
+            return ['find_shelter', 'help_survivors', 'escape_area']
+        elif player_action.get('type') == 'explore':
             return ['discover_ancient_ruin', 'find_hidden_treasure']
         elif player_action.get('type') == 'combat':
             return ['defeat_enemy', 'retreat_and_regroup']
@@ -133,21 +160,34 @@ class NarrativeStructuring:
             triggers.append('festival')
         return triggers
 
-    def _identify_opposing_force(self, player_action, characters, world_state):
+    def _get_active_events(self, world_state):
         """
-        Identifies the opposing force in a conflict based on the current context.
+        Retrieves a list of currently active events from the EventManager.
 
         Args:
-            player_action (str): The action performed by the player.
-            characters (list): A list of characters involved in the narrative.
             world_state (dict): The current state of the game world.
 
         Returns:
-            str: The name or description of the opposing force.
+            list: A list of active events.
         """
-        # Example logic for identifying opposing forces
-        if 'enemy' in player_action:
-            return player_action['enemy']
-        else:
-            return 'an unknown adversary'
+        active_events = []
+        for event_name in self.event_manager.events:
+            if self.event_manager.check_event(event_name, world_state):
+                active_events.append(event_name)
+        return active_events
 
+    def _describe_active_events(self, active_events):
+        """
+        Generates a description of the active events to be included in the narrative.
+
+        Args:
+            active_events (list): List of active events that are currently affecting the game world.
+
+        Returns:
+            str: A textual description of the active events.
+        """
+        descriptions = {
+            'natural_disaster': "A storm rages on the horizon, threatening the lands.",
+            'festival': "The sounds of a distant festival fill the air, bringing a sense of joy and celebration."
+        }
+        return " ".join(descriptions[event] for event in active_events if event in descriptions)
