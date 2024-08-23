@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant Player
+    participant GameEngine
+    participant NarrativeGenerator
+    participant PromptManager
+    participant LLMIntegration
+    participant LLM
+
+    Player ->> GameEngine: Perform Action
+    GameEngine ->> NarrativeGenerator: Trigger Narrative Generation
+    NarrativeGenerator ->> CharacterManager: Get Character Data
+    NarrativeGenerator ->> WorldManager: Get World State
+    NarrativeGenerator ->> NarrativeStructuring: Determine Narrative Structure
+    NarrativeGenerator ->> PromptManager: Generate Prompt
+    PromptManager ->> LLMIntegration: Send Prompt
+    LLMIntegration ->> LLM: Send Prompt
+    LLM ->> LLMIntegration: Return Narrative Text
+    LLMIntegration ->> NarrativeGenerator: Pass Narrative Text
+    NarrativeGenerator ->> GameEngine: Integrate Narrative Text
+    GameEngine ->> Player: Display Narrative
