@@ -6,7 +6,7 @@
 
 The project is heriarchically structured, details are found in this file:
 
-docs/file_structure.mermaid
+[docs/file_structure.mermaid](https://github.com/edz314/GenuineNarrativeCreator/blob/main/docs/file_structure.mermaid)
 
 Directory Breakdown
 
