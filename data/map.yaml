@@ -1,0 +1,45 @@
+# map.yaml
+
+map:
+  name: "Neo-London District Map"
+  width: 20
+  height: 20
+  terrain:
+    - { x: 0, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 1, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 2, y: 0, type: "rain-soaked alley", properties: { movement_cost: 2, visibility: 0.7 } }
+    - { x: 3, y: 0, type: "neon-lit street", properties: { movement_cost: 1, visibility: 1.0 } }
+    - { x: 4, y: 0, type: "skyscraper", properties: { movement_cost: 3, visibility: 0.6 } }
+    - { x: 5, y: 0, type: "digital billboard", properties: { movement_cost: 0, visibility: 1.0 } }
+    - { x: 6, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 7, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 8, y: 0, type: "churn district", properties: { movement_cost: 2, visibility: 0.5 } }
+    - { x: 9, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 10, y: 0, type: "old street enclave", properties: { movement_cost: 1, visibility: 0.8 } }
+    - { x: 11, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 12, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 13, y: 0, type: "imperial college", properties: { movement_cost: 1, visibility: 1.0 } }
+    - { x: 14, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 15, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 16, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 17, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 18, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    - { x: 19, y: 0, type: "urban", properties: { movement_cost: 1, visibility: 0.9 } }
+    # Additional rows omitted for brevity
+
+  landmarks:
+    - { x: 4, y: 5, name: "Piccadilly Circus", description: "The iconic location now dominated by flickering digital billboards, a key location for public events and protests.", importance_level: "high" }
+    - { x: 10, y: 10, name: "The Lamplighter's Hideout", description: "Rumored hideout of the infamous hacker, hidden deep within the Churn Districts.", importance_level: "high" }
+    - { x: 13, y: 3, name: "Department of Obscure Computing", description: "A heavily guarded government facility conducting secretive research projects.", importance_level: "critical" }
+    - { x: 0, y: 19, name: "The City Core", description: "Heart of Neo-London, bustling with activity and corporate influence.", importance_level: "high" }
+
+  dynamic_elements:
+    - { x: 5, y: 5, type: "Surveillance Drone", properties: { patrol_route: "random", detection_range: 3 } }
+    - { x: 8, y: 8, type: "Rebel Hacker", properties: { affiliation: "The Lamplighter", actions: ["scan networks", "plant malware"] } }
+    - { x: 3, y: 15, type: "Street Vendor", properties: { wares: ["black market tech", "encrypted chips"], interactions: ["trade", "gather info"] } }
+    - { x: 14, y: 14, type: "Government Agent", properties: { patrol_route: "fixed", detection_range: 2, actions: ["monitor", "report"] } }
+
+  metadata:
+    created_by: "Map Generator v1.0"
+    theme: "Cyberpunk"
+    difficulty: "Moderate"
