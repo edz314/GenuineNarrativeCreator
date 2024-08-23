@@ -1,0 +1,60 @@
+graph LR
+    A[/project_root/] --> B[/narrative/]
+    A --> C[/core/]
+    A --> D[/advertising/]
+    A --> E[/interface/]
+    A --> F[/data/]
+    A --> G[/docs/]
+    A --> H[/tests/]
+
+    B --> I[/narrative/generation/]
+    B --> J[/narrative/lore/]
+
+    I --> K[narrative_generator.py]
+    I --> L[PromptManager.py]
+    I --> M[narrative_structuring.py]
+    I --> N[action_executor.py]
+    I --> O[escalation_manager.py]
+    I --> P[event_generator.py]
+
+    J --> Q[lore.py]
+
+    C --> R[/core/data_management/]
+    C --> S[/core/analysis/]
+    C --> T[/core/feedback/]
+    C --> U[/core/integration/]
+    C --> V[/core/utils/]
+
+    R --> W[world_manager.py]
+    R --> X[character_manager.py]
+    R --> Y[character.py]
+
+    S --> Z[data_analyzer.py]
+    S --> AA[data_collector.py]
+
+    T --> AB[feedback_processor.py]
+
+    U --> AC[pygame_integration.py]
+    U --> AD[unity_integration.py]
+
+    V --> AE[data_loading.py]
+    V --> AF[logging.py]
+
+    D --> AG[advertiser_input_processor.py]
+    D --> AH[report_generator.py]
+
+    E --> AI[user_interface.py]
+
+    F --> AJ[characters.yaml]
+    F --> AK[dialogue.yaml]
+    F --> AL[world_data.yaml]
+
+    G --> AM[LICENSE]
+    G --> AN[README.md]
+    G --> AO[architecture.md]
+    G --> AP[requirements.txt]
+
+    H --> AQ[/tests/narrative/]
+    H --> AR[/tests/core/]
+    H --> AS[/tests/advertising/]
+    H --> AT[/tests/interface/]
