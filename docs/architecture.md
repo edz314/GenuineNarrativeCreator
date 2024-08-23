@@ -72,7 +72,7 @@ Update and manage the state of various game events.
 Provide data on active events that influence the narrative.
 Trigger narrative or gameplay changes based on event conditions.
 
-**7. Context Management**
+**9. Context Management**
 Purpose: While not fully implemented as a standalone component, context management is critical for maintaining narrative coherence. It tracks past interactions, character developments, and ongoing story arcs, feeding this information to the PromptManager and NarrativeGenerator.
 Key Responsibilities:
 
