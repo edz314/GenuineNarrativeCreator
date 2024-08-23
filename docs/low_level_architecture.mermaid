@@ -1,0 +1,96 @@
+graph LR
+    A[Player Action] --> B[Narrative Generator]
+
+    %% Narrative Generator Detailed Breakdown
+    B --> B1[Validate Action]
+    B1 --> B2[Retrieve Game State]
+    B2 --> B3[Determine Narrative Structure]
+    B3 --> B4[Fetch Context from Context Management]
+
+    %% Character Manager Interaction
+    B2 --> C[Character Manager]
+    C --> C1[Get Character Data]
+    C1 --> C2[Character Traits]
+    C1 --> C3[Character Histories]
+    C1 --> C4[Current Character States]
+
+    %% World Manager Interaction
+    B2 --> D[World Manager]
+    D --> D1[Get Location Data]
+    D1 --> D2[Location States]
+    D1 --> D3[Environmental Factors]
+
+    %% Context Management Interaction
+    B4 --> F[Context Management]
+    F --> F1[Track Past Interactions]
+    F --> F2[Maintain Story Arcs]
+    F --> F3[Update Context Based on Player Actions]
+
+    %% Narrative Structuring Detailed Breakdown
+    B3 --> E[Narrative Structuring]
+    E --> E1[Create Narrative Elements]
+    E1 --> E2[Setup Elements]
+    E1 --> E3[Conflict Elements]
+    E1 --> E4[Resolution Elements]
+    E --> E5[Select Narrative Template]
+    E5 --> E6[Setup, Conflict, Resolution Templates]
+
+    %% Prompt Manager Detailed Breakdown
+    B3 --> N[Prompt Manager]
+    N --> N1[Construct Initial Prompt]
+    N1 --> N2[Fetch Relevant Data]
+    N2 --> N3[Integrate Character and World Data]
+    N1 --> N4[Adapt Prompt]
+    N4 --> N5[Adjust Tone]
+    N4 --> N6[Adjust Urgency]
+    N4 --> N7[Select Appropriate Style]
+
+    %% LLM Integration Detailed Breakdown
+    N --> S[LLM Integration]
+    S --> S1[Initialize Connection]
+    S --> S2[Send Prompt to LLM]
+    S2 --> S3[Receive Response from LLM]
+    S3 --> S4[Process LLM Output]
+    S4 --> S5[Pass Narrative Text Back]
+
+    %% LLM Detailed Breakdown
+    S2 --> W[LLM]
+    W --> W1[Process Prompt]
+    W1 --> W2[Generate Narrative Text]
+    W2 --> S3
+
+    %% Game Engine Detailed Breakdown
+    S5 --> Y[Game Engine]
+    Y --> Y1[Update Game State]
+    Y1 --> Y2[Integrate Narrative Text]
+    Y2 --> Y3[Display to Player]
+    Y3 --> Player
+
+    %% External Data and Dependencies
+    G[External Dependencies] --> B4
+    G --> N2
+    G --> W1
+
+    %% Data Stores
+    subgraph Data Stores
+        C2
+        C3
+        C4
+        D2
+        D3
+        E6
+    end
+
+    %% Context Tracking
+    subgraph Context Tracking
+        F1
+        F2
+        F3
+    end
+
+    %% Narrative Elements
+    subgraph Narrative Elements
+        E2
+        E3
+        E4
+    end
