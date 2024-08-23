@@ -111,7 +111,7 @@ As the narrative complexity grows, the Prompt Manager could be expanded to handl
 
 This is the player flow expressed as a mermaid diagram
 
-(https://github.com/edz314/GenuineNarrativeCreator/blob/main/docs/player_flow.mermaid}
+(https://github.com/edz314/GenuineNarrativeCreator/blob/main/docs/player_flow.mermaid)
 
 ****2. Detailed Component Interaction:**
 
