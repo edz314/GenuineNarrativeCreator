@@ -1,7 +1,7 @@
 # core/narrative_generation/world_manager.py
 
 # Placeholder implementations for World and Location classes
-# These should be replaced with game-specific logic during actual implementation
+# These should be replaced with game-specific logic during actual implementation 
 
 class World:
     """
