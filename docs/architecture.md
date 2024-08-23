@@ -109,12 +109,13 @@ As the narrative complexity grows, the Prompt Manager could be expanded to handl
 
 **1. Flow Overview:**
 
+This is the player flow expressed as a mermaid diagram
 
-Player Action --> [Narrative Generator] --> [Prompt Manager] --> [LLM Integration] --> [LLM] --> [Narrative Text] --> [Game Engine] --> Player
+(https://github.com/edz314/GenuineNarrativeCreator/blob/main/docs/player_flow.mermaid}
 
-**2. Detailed Component Interaction:
+****2. Detailed Component Interaction:**
 
-Narrative Generation Process:**
+**Narrative Generation Process:****
 
 **Player Action:**
 
@@ -193,95 +194,17 @@ Output: Updated Game State with new narrative.
 
 The player sees the narrative unfold based on their previous actions.
 
-**Example Diagram Outline:**
+**High Level Architecture:**
 
-+-----------------------------------+
+This is the high level component architecture expressed as a mermaid diagram:
 
-|          Player Action            |
+(https://github.com/edz314/GenuineNarrativeCreator/blob/main/docs/high_level_architecture.mermaid)
 
-+-----------------------------------+
+**Low Level Architecture:**
 
-             |
-             
-             v
-             
-+-----------------------------------+
+This is the low level logical architecture expressed as a mermaid diagram:
 
-|      Narrative Generator          |
-
-|  - Validate Action                |
-
-|  - Retrieve Game State            |
-
-|  - Structure Narrative            |
-
-+-----------------------------------+
-
-             |
-             
-             v
-             
-+-----------------------------------+
-
-|         Prompt Manager            |
-
-|  - Generate Prompt                |
-
-|  - Adapt Prompt (if needed)       |
-
-+-----------------------------------+
-
-             |
-             
-             v
-             
-+-----------------------------------+
-
-|         LLM Integration           |
-
-|  - Send Prompt to LLM             |
-
-|  - Retrieve Narrative Text        |
-
-+-----------------------------------+
-
-             |
-             
-             v
-             
-+-----------------------------------+
-
-|               LLM                 |
-
-|  - Generate Narrative Text        |
-
-+-----------------------------------+
-
-             |
-             
-             v
-             
-+-----------------------------------+
-
-|          Game Engine              |
-
-|  - Display Narrative              |
-
-+-----------------------------------+
-
-             |
-             
-             v
-             
-+-----------------------------------+
-
-|          Player Receives          |
-
-|          Narrative Output         |
-
-+-----------------------------------+
-
-
+(https://github.com/edz314/GenuineNarrativeCreator/blob/main/docs/low_level_architecture.mermaid)
 
 **Scalability:**
 
