@@ -2,12 +2,16 @@ graph TD
     A[Player Action] --> B[Narrative Generator]
     B --> C[Character Manager]
     B --> D[World Manager]
+    B --> M[Map Manager]  
+    B --> N[Event Manager] 
     B --> E[Narrative Structuring]
     B --> F[Context Management]
     E --> G[Prompt Manager]
     F --> G
     C --> G
     D --> G
+    M --> G 
+    N --> G 
     G --> H[LLM Integration]
     H --> I[Large Language Model LLM]
     I --> H
@@ -23,4 +27,6 @@ graph TD
         F
         G
         H
+        M 
+        N 
     end
