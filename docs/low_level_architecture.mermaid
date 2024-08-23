@@ -20,6 +20,21 @@ graph TD
     D1 --> D2[Location States]
     D1 --> D3[Environmental Factors]
 
+    %% Map Manager Interaction
+    B2 --> M[Map Manager] 
+    %% New component
+    M --> M1[Get Map Data]
+    M1 --> M2[Terrain Types]
+    M1 --> M3[Landmarks]
+    M1 --> M4[Dynamic Elements]
+
+    %% Event Manager Interaction
+    B2 --> N[Event Manager] 
+    %% New component
+    N --> N1[Update Events]
+    N1 --> N2[Check Active Events]
+    N2 --> N3[Event Effects]
+
     %% Context Management Interaction
     B4 --> F[Context Management]
     F --> F1[Track Past Interactions]
@@ -32,21 +47,25 @@ graph TD
     E1 --> E2[Setup Elements]
     E1 --> E3[Conflict Elements]
     E1 --> E4[Resolution Elements]
+    E1 --> E7[Adapt to Map State] 
+    %% Interaction with Map
+    E1 --> E8[Adapt to Events] 
+    %% Interaction with Event Manager
     E --> E5[Select Narrative Template]
     E5 --> E6[Setup, Conflict, Resolution Templates]
 
     %% Prompt Manager Detailed Breakdown
-    B3 --> N[Prompt Manager]
-    N --> N1[Construct Initial Prompt]
-    N1 --> N2[Fetch Relevant Data]
-    N2 --> N3[Integrate Character and World Data]
-    N1 --> N4[Adapt Prompt]
-    N4 --> N5[Adjust Tone]
-    N4 --> N6[Adjust Urgency]
-    N4 --> N7[Select Appropriate Style]
+    B3 --> P[Prompt Manager]
+    P --> P1[Construct Initial Prompt]
+    P1 --> P2[Fetch Relevant Data]
+    P2 --> P3[Integrate Character, World, Map, Event Data]
+    P1 --> P4[Adapt Prompt]
+    P4 --> P5[Adjust Tone]
+    P4 --> P6[Adjust Urgency]
+    P4 --> P7[Select Appropriate Style]
 
     %% LLM Integration Detailed Breakdown
-    N --> S[LLM Integration]
+    P --> S[LLM Integration]
     S --> S1[Initialize Connection]
     S --> S2[Send Prompt to LLM]
     S2 --> S3[Receive Response from LLM]
@@ -68,7 +87,7 @@ graph TD
 
     %% External Data and Dependencies
     G[External Dependencies] --> B4
-    G --> N2
+    G --> P2
     G --> W1
 
     %% Data Stores
@@ -78,7 +97,12 @@ graph TD
         C4
         D2
         D3
+        M2 
+        M3 
+        M4 
         E6
+        N2 
+        N3 
     end
 
     %% Context Tracking
@@ -93,4 +117,6 @@ graph TD
         E2
         E3
         E4
+        E7 
+        E8 
     end
