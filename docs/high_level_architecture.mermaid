@@ -1,0 +1,26 @@
+graph TD
+    A[Player Action] --> B[Narrative Generator]
+    B --> C[Character Manager]
+    B --> D[World Manager]
+    B --> E[Narrative Structuring]
+    B --> F[Context Management]
+    E --> G[Prompt Manager]
+    F --> G
+    C --> G
+    D --> G
+    G --> H[LLM Integration]
+    H --> I[Large Language Model LLM]
+    I --> H
+    H --> J[Narrative Text]
+    J --> K[Game Engine]
+    K --> L[Player]
+
+    subgraph "Core"
+        B
+        C
+        D
+        E
+        F
+        G
+        H
+    end
