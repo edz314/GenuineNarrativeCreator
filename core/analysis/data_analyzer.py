@@ -1,5 +1,7 @@
 # RTNA Core/data_analysis/data_analyzer.py
 
+
+
 class DataAnalyzer:
     """
     Analyzes collected data to measure the effectiveness of the advertising.
