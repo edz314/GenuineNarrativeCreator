@@ -56,7 +56,7 @@ class NarrativeStructuring:
             characters (list): A list of characters involved in the narrative.
             world_state (dict): The current state of the game world.
             active_events (list): List of active events that might affect the setup.
-
+            
         Returns:
             str: The narrative setup description.
         """
