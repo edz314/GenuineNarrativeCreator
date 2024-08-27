@@ -19,6 +19,8 @@ class EscalationManager:
             'log_event': self._log_risk_event
         }
 
+
+
     def assess_risk_and_escalate(self, risk_score, context_data):
         """
         Assesses the risk score and determines whether escalation is necessary.
