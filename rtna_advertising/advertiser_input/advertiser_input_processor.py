@@ -20,7 +20,7 @@ class AdvertiserInputProcessor:
 
         Args:
             advertiser_input (dict): A dictionary containing all the details provided by the advertiser.
-
+            
         Returns:
             dict: A dictionary with processed data ready for use by other modules.
 
