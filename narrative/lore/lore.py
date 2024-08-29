@@ -1,5 +1,6 @@
 # lore.py
 
+
 class Lore:
     """
     Holds the essential lore, world rules, and key narrative elements for the game.
