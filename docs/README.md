@@ -1,90 +1,128 @@
 # GenuineNarrativeCreator
 
-**GenuineNarrativeCreator** is a modular framework designed to create dynamic and immersive narratives in real-time, integrating with various game engines and narrative systems. The project is structured to facilitate ease of development, maintenance, and scalability.
+A Python sandbox for composing narrative from structured, legible
+components — rather than asking a model to improvise it.
 
-## Project Structure
+## Status
 
-The project is heriarchically structured, details are found in this file:
+Personal project. Limited commits across years of intermittent attention.
+Not a shipped product, not a finished framework, and not competing with
+the current crop of LLM-narrative-as-a-service offerings. The code is
+me thinking about narrative architecture in a way that prefers
+composability over prompt-tuning.
 
-[docs/file_structure.mermaid](https://github.com/edz314/GenuineNarrativeCreator/blob/main/docs/file_structure.mermaid)
+## What the project is exploring
 
+"Genuine" in the name is doing deliberate work. It's an implicit stance
+against two things: narrative-by-template (classical procgen that reads
+as arbitrary), and narrative-by-black-box (modern LLM wrappers that
+read as plausible but are structurally opaque).
 
-Directory Breakdown
+What sits in between is narrative as architecture. Lore, character
+state, world state, prompt construction, integration with a rendering
+or gameplay surface, and feedback-driven adjustment are treated as
+named, separable concerns. Any generative layer — whether a templating
+engine, a fine-tuned model, or a general LLM — slots into a defined
+contract with the rest of the system rather than being the system.
 
-narrative/
+The thesis is that narratives feel genuine when the underlying model
+of character, motive, and consequence is consistent — and that
+consistency is a property of structure, not of the generator's output
+distribution.
 
-    generation/: Contains all modules related to the generation and structuring of narratives. This includes the core narrative generation logic, prompt management, and action execution.
-    
-    lore/: Manages the game's lore, ensuring consistency across the narrative.
+This repo predates the "wrap a model and call it a product" era. It
+has deliberately not been rewritten as one.
 
-core/
+## Current scope
 
-    data_management/: Manages game data, including character management and world state management.
-    
-    analysis/: Handles data analysis tasks, including collecting and analyzing data for improving narrative outcomes.
-    
-    feedback/: Processes feedback from the narrative and gameplay, feeding it back into the system for dynamic adjustments.
-    
-    integration/: Manages integration with different game engines (e.g., Pygame, Unity).
-    
-    utils/: Contains utility scripts for tasks like data loading and logging.
+Implemented or scaffolded:
 
-advertising/
+- `narrative/generation` — narrative generation logic, prompt
+  construction, and action execution against a world-state
+- `narrative/lore` — lore registry keyed to world and character
+  identity, intended to hold the invariants a generator must respect
+- `core/data_management` — character and world-state management
+- `core/feedback` — hooks for feeding gameplay or reader-reaction
+  signals back into subsequent generation
+- `core/integration` — adapter shapes for game engines (notional
+  Pygame and Unity targets)
+- `data/` — YAML-backed definitions of characters, dialogue, and world
+  state so the inputs are data, not code
+- `tests/` — pytest suite exercising the modules in isolation
 
-    Handles advertising-related components, including processing advertiser inputs and generating reports.
+Not implemented, despite what the directory layout might suggest:
 
-interface/
+- no runnable game. `main.py` exercises the pipeline; it does not
+  render a playable world
+- the Pygame and Unity integration points are shapes, not working
+  bridges
+- the `rtna_advertising` module is scaffolding for exploring how
+  narrative-adjacent commercial content (placement, sponsored lore,
+  in-world marketing) might be expressed as first-class inputs rather
+  than bolted on post-hoc. It is not a revenue system
+- the `rtna_user_interface` module is shape for a prospective front
+  end; no UI is currently served
+- no trained model, no fine-tuning, no model weights shipped with
+  the repo
 
-    Manages the user interface components for interacting with the narrative system.
+## Running it
 
-data/
+Requires Python 3.10+.
 
-    Contains configuration files in YAML format that define characters, dialogue, and world data.
+    git clone https://github.com/edz314/GenuineNarrativeCreator.git
+    cd GenuineNarrativeCreator
+    pip install -r docs/requirements.txt
+    pytest tests/
+    python main.py
 
-docs/
+`main.py` walks a small scripted scenario through the pipeline —
+character and world loaded from `data/`, narrative generated,
+feedback hook exercised. It is a demonstration of the wiring, not
+a game session.
 
-    Contains project documentation, including this README, the license, and any architectural or requirement documents.
+## Design sketch
 
-tests/
+Four layers, intentionally separate:
 
-    Contains test cases for the different modules within the project, ensuring robustness and reliability.
+**Lore.** The invariants. What is true about the world and its
+characters that any generated narrative must respect. Held as data,
+not baked into prose.
 
-Setup and Installation
+**State.** What is true right now. Character attributes, world
+observations, active plot threads.
 
-To set up the project locally, follow these steps:
+**Generation.** How a specific moment of narrative is produced from
+lore, state, and a prompt construction. The generator itself is a
+pluggable component — the architecture does not require a particular
+model or technique.
 
-Clone the repository:
+**Feedback.** How outcomes (gameplay consequences, reader reactions)
+feed back into state and, where warranted, into the generator's
+future prompt construction.
 
-bash
-Copy code
-git clone https://github.com/username/GenuineNarrativeCreator.git
-cd GenuineNarrativeCreator
-Install dependencies:
+The separation matters because it's what lets you swap the generator
+— from template-based to LLM-based to something not yet invented —
+without the rest of the system changing shape.
 
-Ensure you have Python 3.8+ installed, then run:
+## Limitations
 
-bash
-Copy code
-pip install -r docs/requirements.txt
-Run the tests:
+- Narrative coherence is asserted by the architecture, not proved by
+  it. A generator can still say incoherent things; the framework's
+  job is to make that easier to detect and correct, not to prevent
+  it.
+- No guarantees of scale. The state and lore representations are
+  chosen for clarity, not for large casts or long-lived worlds.
+- No multiplayer or concurrent-actor modelling.
+- The `rtna_advertising` direction is conceptual work in progress.
+  If it reads as awkward, that's because it is — the open question
+  is whether commercial content belongs inside the narrative model
+  or strictly outside it.
+- If you want to generate narratives today, wrap an LLM directly.
+  This repo is for thinking about what narrative *should look like
+  structurally* before the generator does its work.
 
-To verify that everything is working correctly, run the test suite:
+## License
 
-bash
-Copy code
-pytest tests/
-Run the application:
+See `LICENSE`.
 
-To start the narrative generation process, run the main script:
-
-bash
-Copy code
-python main.py
-
-Usage
-
-Once the application is running, you can interact with the narrative system through the user interface or integrate it with your game engine of choice. The narrative/generation/ and core/integration/ modules provide the core functionality to manage and generate immersive narratives based on player input and real-time data.
-
-Contributing
-
-We welcome contributions to improve this project! Please fork the repository, create a new branch, and submit a pull request. Ensure that all new features are covered by appropriate tests.
+- `narrative/generat
